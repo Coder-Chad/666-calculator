@@ -1,0 +1,96 @@
+.changeText:hover {
+    color: red;
+    cursor: crosshair;
+    text-decoration: underline;
+}
+
+textarea {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    color: black;
+}
+
+textarea:hover {
+    border: 5px solid red;    
+}
+
+
+input, submit, button {
+    color: black;
+    border: 4px solid yellow;
+    border-radius: 50%;
+    padding: 10px;
+    margin: 0px;
+    
+    /* background: yellow; */
+}
+
+input:hover, submit:hover, button:hover {
+
+    background: red;
+    cursor: crosshair;
+
+}
+
+body{
+    background: url('60-percent-68735972-matrix-wallpapers.jpg') no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    color: red;
+ }
+
+ .center {
+    font-size: 1.5em;
+    text-align: center;
+    color: yellow;
+}
+
+.MyContainer {
+    font-size: 1.5em;
+    text-align: center;
+    color: yellow;
+}
+
+/*
+#loadingmsg {
+      color: black;
+      background: #fff; 
+      padding: 10px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      z-index: 100;
+      margin-right: -25%;
+      margin-bottom: -25%;
+}
+*/
+
+
+#loadingmsg {
+      color: black;
+      background: yellow; 
+      padding: 10px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 100;
+}
+
+#loadingover {
+      background: black;
+      z-index: 99;
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+      filter: alpha(opacity=80);
+      -moz-opacity: 0.8;
+      -khtml-opacity: 0.8;
+      opacity: 0.8;
+}
