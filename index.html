@@ -27,8 +27,46 @@ function showLoader() {
     document.getElementById('loadingmsg').style.display = 'block';
     document.getElementById('loadingover').style.display = 'block';
 }
+
+var theAboutInfo = 'The So Called \"Beast\" Calculator Version 1.0.0\n\nThis is a custom alert box that explains how this app works.\n\nThe way it works is simple. It uses a \"find the beast formula\" that takes each letter of the alphabet and gives it a numeric value like this. A=6, B=12, C=18 and so on to the end of the alphabet. Using these values it looks at each word that you type or paste into the text box and adds up its value to see if it adds up to the \"beast\" code total of 666.\n\nThe beast code of 666 comes from the Christian Bible in the book or chapter titled Revelations that talks about figuring out what the beast is. If you paste in the english language which is more than 60,000 words you will find hundreds of 666 matches for some very \"ordinary\" words.\n\nNote: Using the A=6, B=12, C=18 and so on to the end of the alphabet \"formula\" the word \"computer\" adds up to 666 which is the beast code value from Revelations.\n\nAuthor: Chad Vincent Estell. Send any comments or suggestions to my email below.\n\nthx3225@gmail.com';
 function showAboutInfo() {
-    alert('');
+    alert( theAboutInfo );
+}
+
+function ifPossibleStoreText() {
+    var textAreaText = document.getElementById("textArea").value;   
+    var lookupCode = document.getElementById("lookupCode").value;   
+    var letterAValue = document.getElementById("theLetter_A_Value").value;   
+    
+    if( textAreaText === '' ) {
+        window.location.href = "error-page.html";
+    }
+    else {  // do the calculation if the user has typed or pasted into the text box
+        
+        // set default values in these two if's
+        if( lookupCode === '' ) {
+            lookupCode = 666;
+        }
+        if( letterAValue === '' ) {
+            letterAValue = 6;
+        }
+
+        // set the localStorage values needed for "calc-result.html"
+        localStorage.setItem("theSetText", textAreaText);
+        localStorage.setItem("searchCode", lookupCode);
+        localStorage.setItem("letter_A_Value", letterAValue);
+        
+        /*
+        // var searchCodeValue = document.getElementById('lookupCode').value;
+        var msg = "The value is: " + searchCodeValue;
+        // console.log( searchCodeValue );
+        // alert( msg );
+        if( searchCodeValue === '' ) {
+            alert( msg );
+        }
+        */
+        window.location.href = "calc-result.html"; // load the result page
+    }
 }
 </script>
 <div class='MyContainer' >
@@ -36,28 +74,10 @@ function showAboutInfo() {
 <div id='loadingover' style='display: none;'></div>
 <div>
 <h3 class='changeText' onclick='showAboutInfo();'>THE SO CALLED BEAST CALCULATOR</h3>
-<!-- <form action='calc-result-page.php'  name='mainForm' method='post' onsubmit='showLoader();'> -->
-<textarea name='textArea' id='textArea' cols='120' rows='20' placeholder='Type or paste into this input box any text that you want analyzed.&#10;&#13;Then press the button at the bottom of the screen to do the calculation.&#10;&#13;&#10;&#13;&#10;&#13;NOTE: The default search code used is 666 and the default value for the letter A is 6.&#10;&#13;&#10;&#13;NOTE: If you click on the title above you can learn more about this app.&#10;&#13;&#10;&#13;NOTE: During testing I found that the calculation report loads faster using the firefox browser.'></textarea>
-<script>
-    function do_calculation() {
-        var textAreaText = document.getElementById('textArea').value;     // plain JavaScript
-        if( textAreaText === '' ) {
-            window.location.href = "error-page.html";
-        }
-        else {
-            // alert("Text has been entered");
-            localStorage.setItem("theSetText", textAreaText);
-            window.location.href = "calc-result.html";     
-        }
-    }
-</script>        
+<textarea name='textArea' id='textArea' cols='120' rows='20' placeholder='Type or paste into this input box any text that you want analyzed.&#10;&#13;Then press the button at the bottom of the screen to do the calculation.&#10;&#13;&#10;&#13;&#10;&#13;NOTE: The default search code used is 666 and the default value for the letter A is 6.&#10;&#13;&#10;&#13;NOTE: If you click on the title above you can learn more about this app.'></textarea>
 <br><input type='text' name='lookupCode' id='lookupCode' value='' placeholder='Type search code here'>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='text' name='theLetter_A_Value' id='theLetter_A_Value' value='' placeholder='Type the letter A value here'>
-<!-- <br><br><input name='calculator' type='submit' onclick='showLoader();' value='Press This Button To Do The Calculation'> -->
-<br><br><button type="button" name="doCalculationBtn" id="doCalculationBtn" onClick="do_calculation();showLoader();" >Press This Button To Do The Calculation</button> 
-<!-- </form> -->
-
-
+<br><br><button type="button" name="doCalculationBtn" id="doCalculationBtn" onClick="ifPossibleStoreText();showLoader();" >Press This Button To Do The Calculation</button> 
 </div>
 </div>
 </body>

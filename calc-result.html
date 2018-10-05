@@ -8,12 +8,9 @@
     <link rel='stylesheet' href='my_calcbeast.css' />
 </head>
 <script>
-// window.onload = alert(localStorage.getItem("theSetText"));
-
 function loadIndexPage() {
     window.location.href = 'index.html';
 }
-
 </script>
 <body>
 <div class='MyContainer'>
@@ -22,110 +19,10 @@ function loadIndexPage() {
     <!-- $textUsed = htmlspecialchars($_POST['textArea']); -->
     <br><h3>THE TEXT YOU USED FOR THE CALCULATION</h3>
     <textarea name='textUsedForSearch' cols='120'rows='10' id='textUsedForSearch' readonly='readonly'></textarea>
-<script>
-window.onload = function() {
-    document.getElementById('textUsedForSearch').value = localStorage.getItem("theSetText");   // plain JavaScrip…
-    do_calculation( localStorage.getItem("theSetText") );
-    // localStorage.setItem("storageName",getInput);
-}
-function do_calculation( setTextValue ) {
-        // alert( setTextValue );
-        // THE MEAT OF THE APP OR THE ENGINE THAT DOES THE WORK OR CALCULATION
-    
-    var totalWords = 0;
-    var currentLineNum = 0;
-    var matches = 0;
-    var outputReport = "";
-    var the_index = 0;
-    var letter_A_Value = 6;
-    var search_code = 666;
-    var outputReport = '';
-    var temp = '';
-
-    var linesOfWordsArray = setTextValue.split("\n");
-    var numberOfLines = linesOfWordsArray.length;
-    var lineOfWordsMsg = "Total lines: " + numberOfLines;
-    //alert(lineOfWordsMsg);
-    var theWords = '';
-    var oneLineOfWords = '';
-
-    var index = 0;
-    var char_match = false;
-    var alphabetLetterNumber = 0;
-    var word_total = 0;
-    var numWordsCurrentLine = 0;
-    var lengthOfCurrentWord = 0;
-
-    while(the_index < numberOfLines){
-        // var line = setTextValue[$the_index];
-        currentLineNum++;
-        oneLineOfWords = linesOfWordsArray[the_index].split(" ");    
-        
-        theWords = theWords.concat(linesOfWordsArray[the_index]);
-        theWords = theWords.concat("\n");
-        
-
-        //oneLineOfWords = setTextValue.split(" ");
-        // var numWordsCurrentLine = oneLineOfWords.length;
-        
-        // var aLine += (oneLineOfWords + "\n");
-        
-        numWordsCurrentLine = oneLineOfWords.length;
-        index = 0;
-        while( index < numWordsCurrentLine ) {
-            word_total = 0;
-            totalWords++; // count it as one word
-            
-            //for( char_num = 0; char_num < (oneLineOfWords[index].length); char_num++) {
-            char_num = 0;
-            var word_length = oneLineOfWords[index].length;
-            while( char_num < word_length ) {
-                char_match = false;
-                alphabetLetterNumber = 1;
-                while( alphabetLetterNumber <= 26 ) {
-                    if( (alphabetLetterNumber+96) === oneLineOfWords[index].charCodeAt(char_num ) ) { // is it a lower case character match
-                        word_total += (letter_A_Value * alphabetLetterNumber);
-                    }
-                    if( (alphabetLetterNumber+64) === oneLineOfWords[index].charCodeAt(char_num) )  { // is it a upper case character match
-                        word_total += (letter_A_Value * alphabetLetterNumber);
-                    }
-                    alphabetLetterNumber++;
-
-                }
-                char_num++;
-                
-            }
-            
-            if( word_total === search_code  && search_code > 0) {
-                matches++;
-                console.log(word_total);
-                if(matches === 1) {
-                    outputReport = "CALCULATION REPORT\n";
-                }
-
-                //outputReport .= "\nMatch number: " . $matches . " Found on line: " . $currentLineNum . " The word is: " . $oneLineOfWords[$index]; 
-                temp = "\nMatch number: " + matches + " Found on line: " + currentLineNum + " The word is: " + oneLineOfWords[index];
-                //outputReport = outputReport.concat( temp );
-                outputReport = outputReport.concat( "\nMatch number: " + matches + " Found on line: " + currentLineNum + " The word is: " + oneLineOfWords[index] );
-                //theWords = theWords.concat("\n");
-
-            }
-            index++;
-        }
-        the_index++;
-    }
-    outputReport = outputReport.concat( "\n\nTotal Matches Found: " + matches + "\nSearch Code was: " + search_code + "\nLetter A Value was: " + letter_A_Value + "\nTotal Words Looked At: " + totalWords + "\nTotal Lines: " +  numberOfLines );    
-    //document.getElementById('resultReport').value = theWords;
-    document.getElementById('resultReport').value = outputReport;
-    localStorage.clear();
-}
-
-// window.onload = alert(localStorage.getItem("storageName"));
-</script>
     <br><button type="button" name="reloadIndexPage" id="reloadIndexPage" onClick="loadIndexPage();" >Press This Button To Reload Start Page</button> 
     <!-- <p>No text was typed or pasted into the input text box.</p> -->
     <!-- <button type="button" name="errorReloadPage" id="errorReloadPage" onClick="loadIndexPage();" >Click This Button To Re-load</button> -->
-
+<script src="my-js.js" ></script>
 </div>
 </body>
 </html>
