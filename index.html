@@ -36,12 +36,28 @@ function showAboutInfo() {
 <div id='loadingover' style='display: none;'></div>
 <div>
 <h3 class='changeText' onclick='showAboutInfo();'>THE SO CALLED BEAST CALCULATOR</h3>
-<form action='calc-result-page.php'  name='mainForm' method='post' onsubmit='showLoader();'>
-<textarea name='textArea' cols='120' rows='20' placeholder='Type or paste into this input box any text that you want analyzed.&#10;&#13;Then press the button at the bottom of the screen to do the calculation.&#10;&#13;&#10;&#13;&#10;&#13;NOTE: The default search code used is 666 and the default value for the letter A is 6.&#10;&#13;&#10;&#13;NOTE: If you click on the title above you can learn more about this app.&#10;&#13;&#10;&#13;NOTE: During testing I found that the calculation report loads faster using the firefox browser.'></textarea>
+<!-- <form action='calc-result-page.php'  name='mainForm' method='post' onsubmit='showLoader();'> -->
+<textarea name='textArea' id='textArea' cols='120' rows='20' placeholder='Type or paste into this input box any text that you want analyzed.&#10;&#13;Then press the button at the bottom of the screen to do the calculation.&#10;&#13;&#10;&#13;&#10;&#13;NOTE: The default search code used is 666 and the default value for the letter A is 6.&#10;&#13;&#10;&#13;NOTE: If you click on the title above you can learn more about this app.&#10;&#13;&#10;&#13;NOTE: During testing I found that the calculation report loads faster using the firefox browser.'></textarea>
+<script>
+    function do_calculation() {
+        var textAreaText = document.getElementById('textArea').value;     // plain JavaScript
+        if( textAreaText === '' ) {
+            window.location.href = "error-page.html";
+        }
+        else {
+            // alert("Text has been entered");
+            localStorage.setItem("theSetText", textAreaText);
+            window.location.href = "calc-result.html";     
+        }
+    }
+</script>        
 <br><input type='text' name='lookupCode' id='lookupCode' value='' placeholder='Type search code here'>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='text' name='theLetter_A_Value' id='theLetter_A_Value' value='' placeholder='Type the letter A value here'>
-<br><br><input name='calculator' type='submit' onclick='showLoader();' value='Press This Button To Do The Calculation'>
-</form>
+<!-- <br><br><input name='calculator' type='submit' onclick='showLoader();' value='Press This Button To Do The Calculation'> -->
+<br><br><button type="button" name="doCalculationBtn" id="doCalculationBtn" onClick="do_calculation();showLoader();" >Press This Button To Do The Calculation</button> 
+<!-- </form> -->
+
+
 </div>
 </div>
 </body>
