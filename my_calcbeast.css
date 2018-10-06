@@ -33,7 +33,7 @@ input:hover, submit:hover, button:hover {
 
 }
 
-body{
+body {
     background: url('60-percent-68735972-matrix-wallpapers.jpg') no-repeat center center fixed; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -48,7 +48,7 @@ body{
     color: yellow;
 }
 
-.MyContainer {
+.MyContainer, a {
     font-size: 1.5em;
     text-align: center;
     color: yellow;
