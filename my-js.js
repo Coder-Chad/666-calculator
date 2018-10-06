@@ -23,12 +23,14 @@ function do_calculation( setTextValue, theSearchCode, theLetterAValue ) {
 
     while(the_index < numberOfLines){  // work through each line of words
 
-        currentLineNum++;
         oneLineOfWords = linesOfWordsArray[the_index].split(" ");    
-        index = 0;
+        currentLineNum++;
         
+        index = 0;
         while( index <  oneLineOfWords.length) {  // the current line of words
-            totalWords++; // count it as one word
+            if(oneLineOfWords[index] != '') {
+                totalWords++; // count it as one word
+            }
             word_total = 0;
             char_num = 0;
             while( char_num < oneLineOfWords[index].length ) { // analyze this word while building its total value
