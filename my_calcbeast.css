@@ -94,3 +94,87 @@ body {
       -khtml-opacity: 0.8;
       opacity: 0.8;
 }
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    
+    textarea {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        color: black;
+        max-width: 90%;
+    } 
+    
+    input {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+} 
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    
+    textarea {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        color: black;
+        max-width: 90%;
+    }
+
+    input {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    
+    textarea {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        color: black;
+        max-width: 90%;
+    }   
+
+    input {
+        display: inline;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    button {
+        margin-top: 15px;
+    }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    input {
+        display: inline;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    button {
+        margin-top: 15px;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    input {
+        display: inline;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    button {
+        margin-top: 15px;
+    }
+}
