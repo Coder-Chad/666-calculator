@@ -1,5 +1,5 @@
 window.onload = function() {
-    document.getElementById('textUsedForSearch').value = localStorage.getItem("theSetText");   // "paste" the input text used into it
+    // document.getElementById('textUsedForSearch').value = localStorage.getItem("theSetText");   // "paste" the input text used into it
     do_calculation( localStorage.getItem("theSetText"), localStorage.getItem("searchCode"), localStorage.getItem("letter_A_Value") );
 }
 
@@ -52,10 +52,10 @@ function do_calculation( setTextValue, theSearchCode, theLetterAValue ) {
                 if(matches === 1) {
                     outputReport = "CALCULATION REPORT\n";
                 }
-                outputReport = outputReport.concat( "\nMatch number: " + matches + " Found on line: " + currentLineNum + " The word is: " + oneLineOfWords[index] );
+                outputReport = outputReport.concat( "\nMatch: " + matches + " on line: " + currentLineNum + " ---> " + oneLineOfWords[index] );
             }
             index++;
-        }
+        } 
         the_index++;
     }
     outputReport = outputReport.concat( "\n\nTotal Matches Found: " + matches + "\nSearch Code was: " + search_code + "\nLetter A Value was: " + letterA + "\nTotal Words Looked At: " + totalWords + "\nTotal Lines: " +  numberOfLines );    
