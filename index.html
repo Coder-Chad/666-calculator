@@ -59,21 +59,24 @@ function ifPossibleDoCalculation() {
     }
 }
 </script>
-<div class='MyContainer' >
+<div>
 <div id='loadingmsg' style='display: none;'>Doing Calculation....</div>
 <div id='loadingover' style='display: none;'></div>
 <div>
-<h3 class='changeText' onclick='showAboutInfo();'>THE SO CALLED BEAST CALCULATOR</h3>
+<h3 class="index_title" onclick='showAboutInfo();'><span>THE SO CALLED BEAST CALCULATOR</span></h3>
 <textarea name='textArea' id='textArea' cols='120' rows='20' placeholder='Type or paste into this input box any text that you want analyzed.&#10;&#13;Then press the button at the bottom of the screen to do the calculation.&#10;&#13;&#10;&#13;&#10;&#13;NOTE: The default search code used is 666 and the default value for the letter A is 6.&#10;&#13;&#10;&#13;NOTE: If you click on the title above you can learn more about this app.'></textarea>
-<br><input type='text' name='lookupCode' id='lookupCode' value='' placeholder='Type search code here'>
+<br><input type='text' name='lookupCode' id='lookupCode' value='' placeholder='Type a search code here'>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='text' name='theLetter_A_Value' id='theLetter_A_Value' value='' placeholder='Type the letter A value here'>
 <br><button type="button" name="doCalculationBtn" id="doCalculationBtn" onClick="ifPossibleDoCalculation();showLoader();" >Press This Button To Do The Calculation</button> 
 
-<!-- This is the counter code being used at netlify site -->
-<br><br><a href="https://www.easycounter.com/"> 
+<!-- This is the counter code being used at my live netlify site. 
+     Comment it out when developing app and uncomment out when I am 
+     about to push to github
+-->
+<!-- <br><br><a href="https://www.easycounter.com/"> 
     <img src="https://www.easycounter.com/counter.php?thx3225" 
     border="0" alt="HTML Hit Counter"></a> 
-    <br><a href="https://www.easycounter.com/"></a>
+    <br><a href="https://www.easycounter.com/"></a> -->
 
 </div>
 </div>

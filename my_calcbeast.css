@@ -4,6 +4,14 @@
     text-decoration: underline;
 }
 
+.index_title:hover span {display:none}
+.index_title:hover:before {
+    content:"Click to open \"About\" box!";
+    color: greenyellow;
+    cursor: crosshair;
+    text-decoration: underline;
+}
+
 textarea {
     display: block;
     margin-left: auto;
@@ -12,13 +20,13 @@ textarea {
 }
 
 textarea:hover {
-    border: 5px solid red;    
+    border: 5px solid greenyellow;    
 }
 
 
 input, submit, button {
     color: black;
-    border: 4px solid yellow;
+    border: 4px solid greenyellow;
     border-radius: 50%;
     padding: 10px;
     margin: 0px;
@@ -28,7 +36,7 @@ input, submit, button {
 
 input:hover, submit:hover, button:hover {
 
-    background: red;
+    background: yellow;
     cursor: crosshair;
 
 }
@@ -39,7 +47,9 @@ body {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    color: red;
+    text-align: center;
+    font-size: 1.5em;
+    color: yellow;
  }
 
  .center {
@@ -49,9 +59,7 @@ body {
 }
 
 .MyContainer, a {
-    font-size: 1.5em;
     text-align: center;
-    color: yellow;
 }
 
 /*
@@ -91,7 +99,7 @@ body {
       -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
       filter: alpha(opacity=80);
       -moz-opacity: 0.8;
-      -khtml-opacity: 0.8;
+      -khtml-opacity: 0.7;
       opacity: 0.8;
 }
 
