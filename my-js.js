@@ -21,6 +21,11 @@ function do_calculation( setTextValue, theSearchCode, theLetterAValue ) {
     var word_total = 0;
     // var numWordsCurrentLine = 0;
 
+    let filterOutCharacters = "<>,:.()#?!;{}-[]|=";
+    let filterIndex = 0;
+    let newWord = '';
+
+
     while(the_index < numberOfLines){  // work through each line of words
 
         oneLineOfWords = linesOfWordsArray[the_index].split(" ");    
@@ -49,12 +54,54 @@ function do_calculation( setTextValue, theSearchCode, theLetterAValue ) {
             }
 
             if( word_total == search_code ) { // has a match been found
-                matches++;
+                matches++;       
+
                 console.log("Match found");
                 if(matches === 1) {
                     outputReport = "CALCULATION REPORT\n";
                 }
-                outputReport = outputReport.concat( "\nMatch: " + matches + " on line: " + currentLineNum + " ---> " + oneLineOfWords[index] );
+                
+                filterIndex = 0;
+                while(filterIndex < filterOutCharacters.length) {
+                    if( oneLineOfWords[index].endsWith(filterOutCharacters[filterIndex]) ) {
+                        newWord = oneLineOfWords[index].substr(0, oneLineOfWords[index].length-1)
+                    }
+                    filterIndex++;
+                }
+
+                // Filter out any of these characters that may be attached to ethe       while(filterIndex < filterOutCharacters.length) {
+                // if(oneLineOfWords[index].endsWith(filterOutCharacters[filterIndex])) {
+                //         newWord = oneLineOfWords[index].substr(0, oneLineOfWords[index].length-2)
+                //     }
+                //     filterIndex++;
+                    
+                // }
+
+                //      These are the characters being filtered out: < > : , . ( ) # ? ! ; / ' ' { } - " " [ ] | \ = 
+                // while(filterIndex < filterOutCharacters.length) {
+                //     if(oneLineOfWords[index].endsWith(filterOutCharacters[filte       while(filterIndex < filterOutCharacters.length) {
+                // if(oneLineOfWords[index].endsWith(filterOutCharacters[filterIndex])) {
+                //     newWord = oneLineOfWords[index].substr(0, oneLineOfWords[index].length-2)
+                // }
+                //     filterIndex++;
+                    
+                //}
+                //         newWord = oneLineOfWords[index].substr(0, oneLineOfWords[index].length-2)
+                //     }
+                //     filterIndex++;
+                    
+                // }
+                // console.log(oneLineOfWords[index]);
+                // console.log(newWord);
+
+                // if(matches === 1) {
+                //     console.log(filterOutCharacters);
+                // }
+                
+
+                // Update or Add to the outputReport string
+                // outputReport = outputReport.concat( "\nMatch: " + matches + " on line: " + currentLineNum + " ---> " + oneLineOfWords[index] );
+                outputReport = outputReport.concat( "\nMatch: " + matches + " on line: " + currentLineNum + " ---> " + newWord );
             }
             index++;
         } 
