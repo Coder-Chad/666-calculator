@@ -3,6 +3,44 @@ window.onload = function() {
     do_calculation( localStorage.getItem("theSetText"), localStorage.getItem("searchCode"), localStorage.getItem("letter_A_Value") );
 }
 
+function isAlpha(ch) {
+    return typeof ch === "string" && ch.length === 1
+           && (ch >= "a" && ch <= "z" || ch >= "A" && ch <= "Z");
+}
+
+
+
+function trim_string( currentWord ) {
+    
+    let filterIndex = currentWord.length;
+    // let filterOutCharacters = "<>,:.()#?!;{}-[]|=";
+    let newWord = '';
+    let count1 = 0;
+    
+    // get rid of any non alpha characters that are on the end of the currentWord
+    while( !isAlpha( currentWord[filterIndex] )) {
+        count1++;
+        filterIndex--;
+    }
+    if(count1 > 0) {
+        newWord = ( currentWord.substr(0, currentWord.length-(count1-1)) )
+    }
+
+    // get rid of any non alpha characters that are on the start of the currentWord
+    count1 = 0;
+    filterIndex = 0;
+    while( !isAlpha( currentWord[filterIndex] )) {
+        count1++;
+        filterIndex++;
+    }
+    if(count1 > 0) {
+        newWord = ( newWord.substr((count1), newWord.length ));
+    }
+
+    return newWord;
+}
+
+
 function do_calculation( setTextValue, theSearchCode, theLetterAValue ) {
  
     var letterA = theLetterAValue;;
@@ -21,10 +59,7 @@ function do_calculation( setTextValue, theSearchCode, theLetterAValue ) {
     var word_total = 0;
     // var numWordsCurrentLine = 0;
 
-    let filterOutCharacters = "<>,:.()#?!;{}-[]|=";
-    let filterIndex = 0;
-    let newWord = '';
-
+    let trimmedWord = '';
 
     while(the_index < numberOfLines){  // work through each line of words
 
@@ -61,13 +96,14 @@ function do_calculation( setTextValue, theSearchCode, theLetterAValue ) {
                     outputReport = "CALCULATION REPORT\n";
                 }
                 
-                filterIndex = 0;
-                while(filterIndex < filterOutCharacters.length) {
-                    if( oneLineOfWords[index].endsWith(filterOutCharacters[filterIndex]) ) {
-                        newWord = oneLineOfWords[index].substr(0, oneLineOfWords[index].length-1)
-                    }
-                    filterIndex++;
+                // find out if the current match word contains any non-alpha characters on its start or end
+                if( !isAlpha(oneLineOfWords[index][0]) || !isAlpha(oneLineOfWords[index][trimmedWord.length]) ) {  
+                    trimmedWord = trim_string(oneLineOfWords[index]);  // remove any filterOutCharacters
                 }
+                else {
+                    trimmedWord = oneLineOfWords[index];  // done to make sure outputReport will work
+                }
+                
 
                 // Filter out any of these characters that may be attached to ethe       while(filterIndex < filterOutCharacters.length) {
                 // if(oneLineOfWords[index].endsWith(filterOutCharacters[filterIndex])) {
@@ -101,7 +137,7 @@ function do_calculation( setTextValue, theSearchCode, theLetterAValue ) {
 
                 // Update or Add to the outputReport string
                 // outputReport = outputReport.concat( "\nMatch: " + matches + " on line: " + currentLineNum + " ---> " + oneLineOfWords[index] );
-                outputReport = outputReport.concat( "\nMatch: " + matches + " on line: " + currentLineNum + " ---> " + newWord );
+                outputReport = outputReport.concat( "\nMatch: " + matches + " on line: " + currentLineNum + " ---> " + trimmedWord );
             }
             index++;
         } 
@@ -111,3 +147,4 @@ function do_calculation( setTextValue, theSearchCode, theLetterAValue ) {
     document.getElementById('resultReport').value = outputReport;
     localStorage.clear();
 }
+
