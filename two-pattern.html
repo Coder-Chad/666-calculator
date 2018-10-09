@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Two Word Pattern</title>
+    <link rel='stylesheet' href='my_calcbeast.css' />
+    <!-- Load an icon library to show a hamburger menu (bars) on small screens -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<script>
+/* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
+    function myFunction() {
+        var x = document.getElementById("myTopnav");
+        if (x.className === "topnav") {
+            x.className += " responsive";
+        } else {
+            x.className = "topnav";
+        }
+    }     
+
+
+</script>
+
+<h2><span>Two Word Pattern Calculation</span></h2>
+<div class="topnav" id="myTopnav">
+        <a href="two-pattern.html"  class="active">Two Word Pattern</a>
+        <a href="index.html" >Home</a>
+        <a href="#contact">Contact</a>
+        <a href="about.html">About</a>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+        <i class="fa fa-bars"></i>
+        </a>
+</div>
+<div>
+    <div id='loadingmsg' style='display: none;'>Doing Calculation....</div>
+    <div id='loadingover' style='display: none;'></div>
+    <div>
+    
+    <br><textarea name='textArea' id='textArea' placeholder='Type or paste into this input box any text that you want analyzed.&#10;&#13;Then press the button at the bottom of the screen to do the calculation.&#10;&#13;NOTE: The default search code used is 666 and the default value for the letter A is 6.&#10;&#13;NOTE: If you click on the title above you can learn more about this app.'></textarea>
+    <br><input type='text' name='lookupCode' id='lookupCode' value='' placeholder='Type a search code here'>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='text' name='theLetter_A_Value' id='theLetter_A_Value' value='' placeholder='Type the letter A value here'>
+    <br><button type="button" name="doCalculationBtn" id="doCalculationBtn" onClick="ifPossibleDoCalculation();showLoader();" >Press This Button To Do The Calculation</button> 
+</div>
+</body>
+</html>
