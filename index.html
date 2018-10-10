@@ -51,7 +51,8 @@ function showAboutInfo() {
 function ifPossibleDoCalculation() {
     var textAreaText = document.getElementById("textArea").value;   
     var lookupCode = document.getElementById("lookupCode").value;   
-    var letterAValue = document.getElementById("theLetter_A_Value").value;   
+    var letterAValue = document.getElementById("theLetter_A_Value").value; 
+    let doTwoWords = 0;  
     
     if( textAreaText === '' ) {
         window.location.href = "error-page.html";
@@ -70,18 +71,19 @@ function ifPossibleDoCalculation() {
         localStorage.setItem("theSetText", textAreaText);
         localStorage.setItem("searchCode", lookupCode);
         localStorage.setItem("letter_A_Value", letterAValue);
+        localStorage.setItem("boolDoTwoWord", doTwoWords);
         
         window.location.href = "calc-result.html"; // load the result page
     }
 }
 </script>
 
-<h2 class="index_title" onclick='showAboutInfo();'><span>666 CALCULATOR</span></h2>
+<h1 class="index_title" onclick='showAboutInfo();'><span>666 CALCULATOR</span></h1>
 <div class="topnav" id="myTopnav">
-    <a href="#home" class="active">Home</a>
-    <a href="two-pattern.html">Two Word Pattern Calculation</a>
-    <a href="about-two-pattern.html">Two Word Pattern About</a>
-    <a href="about.html">About</a>
+    <a href="#home" class="active">HOME</a>
+    <a href="two-pattern.html">TWO WORD CALCULATION</a>
+    <a href="about.html">ABOUT</a>
+    <a href="help.html">HELP</a>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
     <i class="fa fa-bars"></i>
     </a>

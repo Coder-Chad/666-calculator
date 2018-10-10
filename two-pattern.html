@@ -12,37 +12,70 @@
 <body>
 <script>
 /* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
-    function myFunction() {
-        var x = document.getElementById("myTopnav");
-        if (x.className === "topnav") {
-            x.className += " responsive";
-        } else {
-            x.className = "topnav";
+function myFunction() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+        x.className += " responsive";
+    } else {
+        x.className = "topnav";
+    }
+}
+
+function showLoader() {
+    document.getElementById('loadingmsg').style.display = 'block';
+    document.getElementById('loadingover').style.display = 'block';
+}
+
+
+function ifPossibleDoCalculation() {
+    var textAreaText = document.getElementById("textArea").value;   
+    var lookupCode = document.getElementById("lookupCode").value;   
+    var letterAValue = document.getElementById("theLetter_A_Value").value;   
+    let boolDoTwoWordCalc = 1;
+
+    if( textAreaText === '' ) {
+        window.location.href = "error-page.html";
+    }
+    else {  // do the calculation if the user has typed or pasted into the text box
+        
+        // set default values in these two if's
+        if( lookupCode === '' ) {
+            lookupCode = 666;
         }
-    }     
+        if( letterAValue === '' ) {
+            letterAValue = 6;
+        }
 
+        // set the localStorage values needed for "calc-result.html"
+        localStorage.setItem("theSetText", textAreaText);
+        localStorage.setItem("searchCode", lookupCode);
+        localStorage.setItem("letter_A_Value", letterAValue);
+        localStorage.setItem("boolDoTwoWord", boolDoTwoWordCalc);
 
+        window.location.href = "calc-result.html"; // load the result page
+    }
+}
 </script>
 
-<h2><span>Two Word Pattern Calculation</span></h2>
+<h1><span>Two Word Calculation</span></h1>
 <div class="topnav" id="myTopnav">
-        <a href="two-pattern.html"  class="active">Two Word Pattern</a>
-        <a href="index.html" >Home</a>
-        <a href="#contact">Contact</a>
-        <a href="about.html">About</a>
-        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-        <i class="fa fa-bars"></i>
-        </a>
+    <a href="two-pattern.html" class="active">TWO WORD CALCULATION</a>
+    <a href="index.html" >HOME</a>
+    <a href="about.html" >ABOUT</a>
+    <a href="help.html">HELP</a>
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+    <i class="fa fa-bars"></i>
+    </a>
 </div>
 <div>
     <div id='loadingmsg' style='display: none;'>Doing Calculation....</div>
     <div id='loadingover' style='display: none;'></div>
-    <div>
-    
+  
     <br><textarea name='textArea' id='textArea' placeholder='Type or paste into this input box any text that you want analyzed.&#10;&#13;Then press the button at the bottom of the screen to do the calculation.&#10;&#13;NOTE: The default search code used is 666 and the default value for the letter A is 6.&#10;&#13;NOTE: If you click on the title above you can learn more about this app.'></textarea>
     <br><input type='text' name='lookupCode' id='lookupCode' value='' placeholder='Type a search code here'>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='text' name='theLetter_A_Value' id='theLetter_A_Value' value='' placeholder='Type the letter A value here'>
-    <br><button type="button" name="doCalculationBtn" id="doCalculationBtn" onClick="ifPossibleDoCalculation();showLoader();" >Press This Button To Do The Calculation</button> 
+    <br><button type="button" name="doCalculationBtn" id="doCalculationBtn" onClick="ifPossibleDoCalculation();showLoader();" >Press This Button To Do The Calculation</button>
+
 </div>
 </body>
 </html>

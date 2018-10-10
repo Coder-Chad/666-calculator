@@ -1,6 +1,16 @@
 window.onload = function() {
     // document.getElementById('textUsedForSearch').value = localStorage.getItem("theSetText");   // "paste" the input text used into it
-    do_calculation( localStorage.getItem("theSetText"), localStorage.getItem("searchCode"), localStorage.getItem("letter_A_Value") );
+    let doTwoWord = 0;
+    doTwoWord = localStorage.getItem("boolDoTwoWord");
+    if( doTwoWord ) {
+        console.log("in first if");
+        do_two_word_calculation( localStorage.getItem("theSetText"), localStorage.getItem("searchCode"), localStorage.getItem("letter_A_Value"), localStorage.getItem("boolDoTwoWord") );
+    }
+    else {
+        console.log("in second if");
+
+        do_calculation( localStorage.getItem("theSetText"), localStorage.getItem("searchCode"), localStorage.getItem("letter_A_Value") );
+    }
 }
 
 function isAlpha(ch) {
@@ -8,9 +18,7 @@ function isAlpha(ch) {
            && (ch >= "a" && ch <= "z" || ch >= "A" && ch <= "Z");
 }
 
-
-
-function trim_string( currentWord ) {
+function trim_string( currentWord  ) {
     
     let filterIndex = currentWord.length;
     // let filterOutCharacters = "<>,:.()#?!;{}-[]|=";
@@ -40,9 +48,144 @@ function trim_string( currentWord ) {
     return newWord;
 }
 
+function do_two_word_calculation( setTextValue, theSearchCode, theLetterAValue, boolDoTwoWordPattern ) {
 
-function do_calculation( setTextValue, theSearchCode, theLetterAValue ) {
+    var letterA = theLetterAValue;;
+    var search_code = theSearchCode;
+    var linesOfWordsArray = setTextValue.split("\n");
+    var numberOfLines = linesOfWordsArray.length;
+    var totalWords = 0;
+    var currentLineNum = 0;
+    var matches = 0;
+    var outputReport = "";
+    var the_index = 0;
+    // var theWords = '';
+    var oneLineOfWords = '';
+    var index = 0;
+    var alphabetLetterNumber = 0;
+    var word_total = 0;
+    // var numWordsCurrentLine = 0;
+
+    // let trimmedWord = '';
+    let theWordJoined = '';
+    let lineWalkerIndex = 0;
+    let word1 = '';
+    let word2 = '';
+    let boolWord1Set = false;
+    let boolWord2Set = false;
+    let boolMatchFound = false;
+    while(the_index < numberOfLines){  // work through each line of words
+
+        oneLineOfWords = linesOfWordsArray[the_index].split(" ");    
+        currentLineNum++;
+
+        index = 0;
+
+        
+        
+        while( index <  oneLineOfWords.length) {  // the current line of words
+            // if(theWordJoined != '') {
+            //     totalWords++; // count it as one word
+            // }
+            word_total = 0;
+            char_num = 0;
+
+            // if(oneLineOfWords[index] != '') {
+            //     word1 = trim_string(oneLineOfWords[index]);
+            // }
+            // if(oneLineOfWords[index+1] != '') {
+            //     word2 = trim_string(oneLineOfWords[index+1]);
+            // }
+            // word1 = oneLineOfWords[index];  
+            // console.log(word1);
+            // word2 = trim_string(oneLineOfWords[index+1]);
+            // word2 = oneLineOfWords[index+1];
+            // theWordJoined = word1.concat(word2);
+            // if(oneLineOfWords[index] != undefined ) {
+            word1 = oneLineOfWords[index].trim();
+            totalWords++;
+            if(oneLineOfWords[index+1] != undefined ) {
+                word2 = oneLineOfWords[index+1].trim();
+                theWordJoined = oneLineOfWords[index].concat(oneLineOfWords[index+1]);
+                console.log("The word Joined: " + theWordJoined);
+            }
+            // boolWord1Set = true;
+            
+            // if(oneLineOfWords[index+1] != undefined ) {
+            //     word2 = oneLineOfWords[index+1].trim();
+            //     // totalWords++;
+            //     boolWord2Set = true;
+            // }
+
+            // if( oneLineOfWords[index+1] != undefined ) {
+            //     theWordJoined = oneLineOfWords[index].concat(oneLineOfWords[index+1]);
+            //     console.log("The word Joined: " + theWordJoined);
+            // }
+            
+            
+            if( theWordJoined.length > 0 ) {
+                while( char_num < theWordJoined.length ) { // analyze this word while building its total value
+                    alphabetLetterNumber = 1;
+                    while( alphabetLetterNumber <= 26 ) {
+                        if( (alphabetLetterNumber+96) === theWordJoined.charCodeAt(char_num ) ) { // is it a lower case character match
+                            word_total += (letterA * alphabetLetterNumber);
+                        }
+                        if( (alphabetLetterNumber+64) === theWordJoined.charCodeAt(char_num) )  { // is it a upper case character match
+                            word_total += (letterA * alphabetLetterNumber);
+                        }
+                        alphabetLetterNumber++;
+
+                    }
+                    char_num++;
+                }
+            }
+
+            if( word_total == search_code ) { // has a match been found
+                matches++;       
+                index += 2;
+                boolMatchFound = true;
+                console.log("Match found");
+                if(matches === 1) {
+                    outputReport = "CALCULATION REPORT\n";
+                }
+                
+                // // find out if the current match word contains any non-alpha characters on its start or end
+                // if( !isAlpha(oneLineOfWords[index][0]) || !isAlpha(oneLineOfWords[index][trimmedWord.length]) ) {  
+                //     trimmedWord = trim_string(oneLineOfWords[index]);  // remove any filterOutCharacters
+                // }
+                // else {
+                //     trimmedWord = oneLineOfWords[index];  // done to make sure outputReport will work
+                // }
+                
+                if(oneLineOfWords[index+1] != undefined) {
+                    outputReport = outputReport.concat( "\nMatch: " + matches + " on line: " + currentLineNum + " ---> " + oneLineOfWords[index] +  " " + oneLineOfWords[index+1] );
+                }
+                
+            }
+            if(!boolMatchFound) {
+                index++;
+                // boolMatchFound = false;
+            }
+            
+            lineWalkerIndex++;
+            boolWord1Set = false;
+            boolWord2Set = false;
+            boolMatchFound = false;
+
+        } 
+        the_index++;
+    }
+    outputReport = outputReport.concat( "\n\nTotal Matches Found: " + matches + "\nSearch Code was: " + search_code + "\nLetter A Value was: " + letterA + "\nTotal Words Looked At: " + totalWords + "\nTotal Lines: " +  numberOfLines );    
+    document.getElementById('resultReport').value = outputReport;
+    localStorage.clear();
+
+}
+
+function do_calculation( setTextValue, theSearchCode, theLetterAValue) {
  
+    // alert("do calc call " + boolDoTwoWordPattern);
+    
+
     var letterA = theLetterAValue;;
     var search_code = theSearchCode;
     var linesOfWordsArray = setTextValue.split("\n");
@@ -104,39 +247,6 @@ function do_calculation( setTextValue, theSearchCode, theLetterAValue ) {
                     trimmedWord = oneLineOfWords[index];  // done to make sure outputReport will work
                 }
                 
-
-                // Filter out any of these characters that may be attached to ethe       while(filterIndex < filterOutCharacters.length) {
-                // if(oneLineOfWords[index].endsWith(filterOutCharacters[filterIndex])) {
-                //         newWord = oneLineOfWords[index].substr(0, oneLineOfWords[index].length-2)
-                //     }
-                //     filterIndex++;
-                    
-                // }
-
-                //      These are the characters being filtered out: < > : , . ( ) # ? ! ; / ' ' { } - " " [ ] | \ = 
-                // while(filterIndex < filterOutCharacters.length) {
-                //     if(oneLineOfWords[index].endsWith(filterOutCharacters[filte       while(filterIndex < filterOutCharacters.length) {
-                // if(oneLineOfWords[index].endsWith(filterOutCharacters[filterIndex])) {
-                //     newWord = oneLineOfWords[index].substr(0, oneLineOfWords[index].length-2)
-                // }
-                //     filterIndex++;
-                    
-                //}
-                //         newWord = oneLineOfWords[index].substr(0, oneLineOfWords[index].length-2)
-                //     }
-                //     filterIndex++;
-                    
-                // }
-                // console.log(oneLineOfWords[index]);
-                // console.log(newWord);
-
-                // if(matches === 1) {
-                //     console.log(filterOutCharacters);
-                // }
-                
-
-                // Update or Add to the outputReport string
-                // outputReport = outputReport.concat( "\nMatch: " + matches + " on line: " + currentLineNum + " ---> " + oneLineOfWords[index] );
                 outputReport = outputReport.concat( "\nMatch: " + matches + " on line: " + currentLineNum + " ---> " + trimmedWord );
             }
             index++;
