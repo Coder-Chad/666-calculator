@@ -1,8 +1,8 @@
 window.onload = function() {
     // document.getElementById('textUsedForSearch').value = localStorage.getItem("theSetText");   // "paste" the input text used into it
-    let doTwoWord = 0;
-    doTwoWord = localStorage.getItem("boolDoTwoWord");
-    if( doTwoWord ) {
+    // let doTwoWord = 0;
+    // doTwoWord = localStorage.getItem("boolDoTwoWord");
+    if( localStorage.getItem("boolDoTwoWord") == "true" ) {
         console.log("in first if");
         do_two_word_calculation( localStorage.getItem("theSetText"), localStorage.getItem("searchCode"), localStorage.getItem("letter_A_Value"), localStorage.getItem("boolDoTwoWord") );
     }
@@ -22,7 +22,7 @@ function trim_string( currentWord  ) {
     
     let filterIndex = currentWord.length;
     // let filterOutCharacters = "<>,:.()#?!;{}-[]|=";
-    let newWord = '';
+    let newWord = currentWord;
     let count1 = 0;
     
     // get rid of any non alpha characters that are on the end of the currentWord
@@ -58,7 +58,7 @@ function do_two_word_calculation( setTextValue, theSearchCode, theLetterAValue, 
     var currentLineNum = 0;
     var matches = 0;
     var outputReport = "";
-    var the_index = 0;
+    var lineNumIndex = 0;
     // var theWords = '';
     var oneLineOfWords = '';
     var index = 0;
@@ -74,9 +74,11 @@ function do_two_word_calculation( setTextValue, theSearchCode, theLetterAValue, 
     let boolWord1Set = false;
     let boolWord2Set = false;
     let boolMatchFound = false;
-    while(the_index < numberOfLines){  // work through each line of words
+    let boolWordJoined = false;
+    let indexSkip = 0;
+    while(lineNumIndex < numberOfLines){  // work through each line of words
 
-        oneLineOfWords = linesOfWordsArray[the_index].split(" ");    
+        oneLineOfWords = linesOfWordsArray[lineNumIndex].split(" ");    
         currentLineNum++;
 
         index = 0;
@@ -89,7 +91,9 @@ function do_two_word_calculation( setTextValue, theSearchCode, theLetterAValue, 
             // }
             word_total = 0;
             char_num = 0;
-
+            if( index == (oneLineOfWords.length-1) ) {
+                totalWords += (int)(oneLineOfWords.length);
+            }
             // if(oneLineOfWords[index] != '') {
             //     word1 = trim_string(oneLineOfWords[index]);
             // }
@@ -102,12 +106,19 @@ function do_two_word_calculation( setTextValue, theSearchCode, theLetterAValue, 
             // word2 = oneLineOfWords[index+1];
             // theWordJoined = word1.concat(word2);
             // if(oneLineOfWords[index] != undefined ) {
-            word1 = oneLineOfWords[index].trim();
-            totalWords++;
-            if(oneLineOfWords[index+1] != undefined ) {
-                word2 = oneLineOfWords[index+1].trim();
-                theWordJoined = oneLineOfWords[index].concat(oneLineOfWords[index+1]);
+            if(oneLineOfWords[ (index+indexSkip) ] != undefined && oneLineOfWords[ (index+indexSkip) ].length > 0) {
+                word1 = trim_string(oneLineOfWords[ (index+indexSkip) ]);
+            }
+            // word1 = trim_string(word1);
+            
+            if(oneLineOfWords[ (index+indexSkip+1) ] != undefined && oneLineOfWords[ (index+indexSkip+1) ].length > 0) {
+                word2 = trim_string(oneLineOfWords[ (index+indexSkip+1) ]);
+                // word2 = oneLineOfWords[index+1].trim();
+                // word2 = trim_string(word2);
+                theWordJoined = word1.concat(word2);
                 console.log("The word Joined: " + theWordJoined);
+                
+                boolWordJoined = true;
             }
             // boolWord1Set = true;
             
@@ -121,9 +132,13 @@ function do_two_word_calculation( setTextValue, theSearchCode, theLetterAValue, 
             //     theWordJoined = oneLineOfWords[index].concat(oneLineOfWords[index+1]);
             //     console.log("The word Joined: " + theWordJoined);
             // }
+            // if( theWordJoined != '' ) {
+            //     totalWords++;
+            // }
+
+
             
-            
-            if( theWordJoined.length > 0 ) {
+            if( theWordJoined.length > 0 && boolWordJoined ) {
                 while( char_num < theWordJoined.length ) { // analyze this word while building its total value
                     alphabetLetterNumber = 1;
                     while( alphabetLetterNumber <= 26 ) {
@@ -142,8 +157,8 @@ function do_two_word_calculation( setTextValue, theSearchCode, theLetterAValue, 
 
             if( word_total == search_code ) { // has a match been found
                 matches++;       
-                index += 2;
-                boolMatchFound = true;
+                indexSkip = 2;
+                // boolMatchFound = true;
                 console.log("Match found");
                 if(matches === 1) {
                     outputReport = "CALCULATION REPORT\n";
@@ -157,25 +172,31 @@ function do_two_word_calculation( setTextValue, theSearchCode, theLetterAValue, 
                 //     trimmedWord = oneLineOfWords[index];  // done to make sure outputReport will work
                 // }
                 
-                if(oneLineOfWords[index+1] != undefined) {
-                    outputReport = outputReport.concat( "\nMatch: " + matches + " on line: " + currentLineNum + " ---> " + oneLineOfWords[index] +  " " + oneLineOfWords[index+1] );
-                }
-                
+                // if(oneLineOfWords[index+1] != undefined) {
+                outputReport = outputReport.concat( "\nMatch: " + matches + " on line: " + currentLineNum + " ---> " + word1 +  " " + word2 );
+                word1 = '';
+                word2 = '';
+                // }
+                index += (indexSkip);    
             }
-            if(!boolMatchFound) {
+            else {
+                // word1 = '';
+                // word2 = '';
+
+                indexSkip = 0;
                 index++;
-                // boolMatchFound = false;
             }
             
-            lineWalkerIndex++;
-            boolWord1Set = false;
-            boolWord2Set = false;
-            boolMatchFound = false;
+            boolWordJoined = false;
+            // lineWalkerIndex++;
+            // boolWord1Set = false;
+            // boolWord2Set = false;
+            // boolMatchFound = false;
 
         } 
-        the_index++;
+        lineNumIndex++;
     }
-    outputReport = outputReport.concat( "\n\nTotal Matches Found: " + matches + "\nSearch Code was: " + search_code + "\nLetter A Value was: " + letterA + "\nTotal Words Looked At: " + totalWords + "\nTotal Lines: " +  numberOfLines );    
+    outputReport = outputReport.concat( "\n\nTotal Matches Found: " + matches + "\nSearch Code was: " + search_code + "\nLetter A Value was: " + letterA + "\nTotal Words Looked At: " + totalWords+1 + "\nTotal Lines: " +  numberOfLines );    
     document.getElementById('resultReport').value = outputReport;
     localStorage.clear();
 
@@ -194,7 +215,7 @@ function do_calculation( setTextValue, theSearchCode, theLetterAValue) {
     var currentLineNum = 0;
     var matches = 0;
     var outputReport = "";
-    var the_index = 0;
+    var lineNumIndex = 0;
     // var theWords = '';
     var oneLineOfWords = '';
     var index = 0;
@@ -204,9 +225,9 @@ function do_calculation( setTextValue, theSearchCode, theLetterAValue) {
 
     let trimmedWord = '';
 
-    while(the_index < numberOfLines){  // work through each line of words
+    while(lineNumIndex < numberOfLines){  // work through each line of words
 
-        oneLineOfWords = linesOfWordsArray[the_index].split(" ");    
+        oneLineOfWords = linesOfWordsArray[lineNumIndex].split(" ");    
         currentLineNum++;
         
         index = 0;
@@ -251,7 +272,7 @@ function do_calculation( setTextValue, theSearchCode, theLetterAValue) {
             }
             index++;
         } 
-        the_index++;
+        lineNumIndex++;
     }
     outputReport = outputReport.concat( "\n\nTotal Matches Found: " + matches + "\nSearch Code was: " + search_code + "\nLetter A Value was: " + letterA + "\nTotal Words Looked At: " + totalWords + "\nTotal Lines: " +  numberOfLines );    
     document.getElementById('resultReport').value = outputReport;
