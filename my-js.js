@@ -26,7 +26,7 @@ function trim_string( currentWord  ) {
     let count1 = 0;
     
     // get rid of any non alpha characters that are on the end of the currentWord
-    while( !isAlpha( currentWord[filterIndex] )) {
+    while( !isAlpha( currentWord[filterIndex] ) ) {
         count1++;
         filterIndex--;
     }
@@ -83,7 +83,7 @@ function do_two_word_calculation( setTextValue, theSearchCode, theLetterAValue, 
 
         index = 0;
 
-        
+        console.log("one line count is: " + oneLineOfWords.length);
         
         while( index <  oneLineOfWords.length) {  // the current line of words
             // if(theWordJoined != '') {
@@ -91,54 +91,43 @@ function do_two_word_calculation( setTextValue, theSearchCode, theLetterAValue, 
             // }
             word_total = 0;
             char_num = 0;
-            if( index == (oneLineOfWords.length-1) ) {
-                totalWords += (int)(oneLineOfWords.length);
-            }
-            // if(oneLineOfWords[index] != '') {
-            //     word1 = trim_string(oneLineOfWords[index]);
-            // }
-            // if(oneLineOfWords[index+1] != '') {
-            //     word2 = trim_string(oneLineOfWords[index+1]);
-            // }
-            // word1 = oneLineOfWords[index];  
-            // console.log(word1);
-            // word2 = trim_string(oneLineOfWords[index+1]);
-            // word2 = oneLineOfWords[index+1];
-            // theWordJoined = word1.concat(word2);
-            // if(oneLineOfWords[index] != undefined ) {
-            if(oneLineOfWords[ (index+indexSkip) ] != undefined && oneLineOfWords[ (index+indexSkip) ].length > 0) {
-                word1 = trim_string(oneLineOfWords[ (index+indexSkip) ]);
+            word1 = '';
+            word2 = '';
+        
+            
+            if(oneLineOfWords[ (index) ] != undefined && oneLineOfWords[ (index) ].length > 0) {
+                word1 = trim_string(oneLineOfWords[ (index) ]);
+                // if( isAlpha( word1[0] ) === true ) {
+                //     totalWords++;
+                //     // totalWords += indexSkip;
+                // }
+                if( (isAlpha( word1[0] ) === true) && (isAlpha( word1[(word1.length-1)]) ) === true ) {
+                    totalWords++;
+                }
+
+                
+                // console.log( "Is Alpha value: " + isAlpha(word1[0]) );
             }
             // word1 = trim_string(word1);
             
-            if(oneLineOfWords[ (index+indexSkip+1) ] != undefined && oneLineOfWords[ (index+indexSkip+1) ].length > 0) {
-                word2 = trim_string(oneLineOfWords[ (index+indexSkip+1) ]);
-                // word2 = oneLineOfWords[index+1].trim();
-                // word2 = trim_string(word2);
+            if(oneLineOfWords[ (index+1) ] != undefined && (oneLineOfWords[ (index+1) ].length > 0) ) {
+    
+                word2 = trim_string(oneLineOfWords[ (index+1) ]);
+
+                if( (isAlpha( word2[0] ) === true) && (isAlpha( (word2[(word2.length-1)]) ) === true) ) {
+                    totalWords++;
+                }
+
+    
                 theWordJoined = word1.concat(word2);
-                console.log("The word Joined: " + theWordJoined);
+                // console.log("The word Joined: " + theWordJoined);
                 
                 boolWordJoined = true;
+
             }
-            // boolWord1Set = true;
-            
-            // if(oneLineOfWords[index+1] != undefined ) {
-            //     word2 = oneLineOfWords[index+1].trim();
-            //     // totalWords++;
-            //     boolWord2Set = true;
-            // }
-
-            // if( oneLineOfWords[index+1] != undefined ) {
-            //     theWordJoined = oneLineOfWords[index].concat(oneLineOfWords[index+1]);
-            //     console.log("The word Joined: " + theWordJoined);
-            // }
-            // if( theWordJoined != '' ) {
-            //     totalWords++;
-            // }
-
 
             
-            if( theWordJoined.length > 0 && boolWordJoined ) {
+            if( theWordJoined.length > 0 && boolWordJoined && theWordJoined != '') {
                 while( char_num < theWordJoined.length ) { // analyze this word while building its total value
                     alphabetLetterNumber = 1;
                     while( alphabetLetterNumber <= 26 ) {
@@ -155,35 +144,31 @@ function do_two_word_calculation( setTextValue, theSearchCode, theLetterAValue, 
                 }
             }
 
+            // // It is not a word if the variable word_total has not moved beyond a 0 value
+            // if(word_total > 0 || boolWordJoined) {
+            //     totalWords++;
+            // }
+
+
             if( word_total == search_code ) { // has a match been found
                 matches++;       
-                indexSkip = 2;
+                // indexSkip = 2;
                 // boolMatchFound = true;
                 console.log("Match found");
                 if(matches === 1) {
                     outputReport = "CALCULATION REPORT\n";
                 }
                 
-                // // find out if the current match word contains any non-alpha characters on its start or end
-                // if( !isAlpha(oneLineOfWords[index][0]) || !isAlpha(oneLineOfWords[index][trimmedWord.length]) ) {  
-                //     trimmedWord = trim_string(oneLineOfWords[index]);  // remove any filterOutCharacters
-                // }
-                // else {
-                //     trimmedWord = oneLineOfWords[index];  // done to make sure outputReport will work
-                // }
-                
-                // if(oneLineOfWords[index+1] != undefined) {
                 outputReport = outputReport.concat( "\nMatch: " + matches + " on line: " + currentLineNum + " ---> " + word1 +  " " + word2 );
-                word1 = '';
-                word2 = '';
                 // }
-                index += (indexSkip);    
+                index += 2;   
+                // totalWords -= 1; 
             }
             else {
                 // word1 = '';
                 // word2 = '';
 
-                indexSkip = 0;
+                // indexSkip = 0;
                 index++;
             }
             
@@ -196,7 +181,7 @@ function do_two_word_calculation( setTextValue, theSearchCode, theLetterAValue, 
         } 
         lineNumIndex++;
     }
-    outputReport = outputReport.concat( "\n\nTotal Matches Found: " + matches + "\nSearch Code was: " + search_code + "\nLetter A Value was: " + letterA + "\nTotal Words Looked At: " + totalWords+1 + "\nTotal Lines: " +  numberOfLines );    
+    outputReport = outputReport.concat( "\n\nTotal Matches Found: " + matches + "\nSearch Code was: " + search_code + "\nLetter A Value was: " + letterA + "\nTotal Words Looked At: " + ((totalWords-numberOfLines)+1) + "\nTotal Lines: " +  numberOfLines );
     document.getElementById('resultReport').value = outputReport;
     localStorage.clear();
 
