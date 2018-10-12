@@ -18,20 +18,30 @@ function isAlpha(ch) {
            && (ch >= "a" && ch <= "z" || ch >= "A" && ch <= "Z");
 }
 
+function isNumeric(ch) {
+    return typeof ch === "number" && ch.length === 1
+           && (ch >= "0" && ch <= "9");
+}
+
 function trim_string( currentWord  ) {
-    
-    let filterIndex = currentWord.length;
-    // let filterOutCharacters = "<>,:.()#?!;{}-[]|=";
-    let newWord = currentWord;
+
     let count1 = 0;
+    let filterIndex = currentWord.length;
+    let newWord = currentWord;
+    let itsAnAlphaString = false;
     
     // get rid of any non alpha characters that are on the end of the currentWord
     while( !isAlpha( currentWord[filterIndex] ) ) {
         count1++;
         filterIndex--;
+        if(count1 > currentWord.length) {  // handles no alpha characters in string since the assumption is that an alpha character will be encountered 
+            count1 = 0;
+            break;
+        }
     }
     if(count1 > 0) {
         newWord = ( currentWord.substr(0, currentWord.length-(count1-1)) )
+        itsAnAlphaString = true;
     }
 
     // get rid of any non alpha characters that are on the start of the currentWord
@@ -40,11 +50,33 @@ function trim_string( currentWord  ) {
     while( !isAlpha( currentWord[filterIndex] )) {
         count1++;
         filterIndex++;
+        if(count1 > currentWord.length) {  // handles no alpha characters in string since the assumption is that an alpha character will be encountered 
+            count1 = 0;
+            break;
+        }
     }
     if(count1 > 0) {
         newWord = ( newWord.substr((count1), newWord.length ));
+        itsAnAlphaString = true;
     }
 
+    // get rid of any non alpha strings or even numeric strings
+    filterIndex = currentWord.length;
+    count1 = 0;
+    if(!itsAnAlphaString) {
+        while( !isNumeric(currentWord[filterIndex]) ) {
+            filterIndex--;
+            count1++;
+            if(count1 > currentWord.length) {
+                newWord = "";
+                break;
+            }
+        }
+    }
+    if( count1 > 0 && count1 <= currentWord.length && !itsAnAlphaString) {
+        newWord = "";
+    }
+        
     return newWord;
 }
 
@@ -57,7 +89,7 @@ function do_two_word_calculation( setTextValue, theSearchCode, theLetterAValue, 
     var totalWords = 0;
     var currentLineNum = 0;
     var matches = 0;
-    var outputReport = "";
+    let outputReport = "CALCULATION REPORT USING \"TWO WORD\" PATTERN SEARCH\n";
     var lineNumIndex = 0;
     // var theWords = '';
     var oneLineOfWords = '';
@@ -83,30 +115,17 @@ function do_two_word_calculation( setTextValue, theSearchCode, theLetterAValue, 
 
         index = 0;
 
-        console.log("one line count is: " + oneLineOfWords.length);
+        // console.log("one line count is: " + oneLineOfWords.length);
         
         while( index <  oneLineOfWords.length) {  // the current line of words
-            // if(theWordJoined != '') {
-            //     totalWords++; // count it as one word
-            // }
             word_total = 0;
             char_num = 0;
             word1 = '';
             word2 = '';
-        
+            // console.log("var index: " + index);
             
             if(oneLineOfWords[ (index) ] != undefined && oneLineOfWords[ (index) ].length > 0) {
                 word1 = trim_string(oneLineOfWords[ (index) ]);
-                // if( isAlpha( word1[0] ) === true ) {
-                //     totalWords++;
-                //     // totalWords += indexSkip;
-                // }
-                if( (isAlpha( word1[0] ) === true) && (isAlpha( word1[(word1.length-1)]) ) === true ) {
-                    totalWords++;
-                }
-
-                
-                // console.log( "Is Alpha value: " + isAlpha(word1[0]) );
             }
             // word1 = trim_string(word1);
             
@@ -114,18 +133,13 @@ function do_two_word_calculation( setTextValue, theSearchCode, theLetterAValue, 
     
                 word2 = trim_string(oneLineOfWords[ (index+1) ]);
 
-                if( (isAlpha( word2[0] ) === true) && (isAlpha( (word2[(word2.length-1)]) ) === true) ) {
-                    totalWords++;
-                }
 
-    
                 theWordJoined = word1.concat(word2);
                 // console.log("The word Joined: " + theWordJoined);
                 
                 boolWordJoined = true;
 
             }
-
             
             if( theWordJoined.length > 0 && boolWordJoined && theWordJoined != '') {
                 while( char_num < theWordJoined.length ) { // analyze this word while building its total value
@@ -144,54 +158,44 @@ function do_two_word_calculation( setTextValue, theSearchCode, theLetterAValue, 
                 }
             }
 
-            // // It is not a word if the variable word_total has not moved beyond a 0 value
-            // if(word_total > 0 || boolWordJoined) {
-            //     totalWords++;
-            // }
-
-
             if( word_total == search_code ) { // has a match been found
-                matches++;       
-                // indexSkip = 2;
-                // boolMatchFound = true;
-                console.log("Match found");
-                if(matches === 1) {
-                    outputReport = "CALCULATION REPORT\n";
-                }
                 
-                outputReport = outputReport.concat( "\nMatch: " + matches + " on line: " + currentLineNum + " ---> " + word1 +  " " + word2 );
-                // }
-                index += 2;   
-                // totalWords -= 1; 
-            }
-            else {
-                // word1 = '';
-                // word2 = '';
+                if(currentLineNum === 1) {
+                    // console.log("The word: " + theWordJoined + " and its length is: " + theWordJoined.length);
+                }
 
-                // indexSkip = 0;
-                index++;
+                if(word1 === '') {
+                }
+                else if(word2 === '') {
+                }
+                else {
+                    matches++;
+                    outputReport = outputReport.concat( "\nMatch: " + matches + " on line: " + currentLineNum );
+                    outputReport = outputReport.concat(" ---> " + word1 + " " + word2 );
+                    
+                }
+
             }
-            
+
+            if(word1 != '') {
+                totalWords++;
+            }
+
+            index++;
             boolWordJoined = false;
-            // lineWalkerIndex++;
-            // boolWord1Set = false;
-            // boolWord2Set = false;
-            // boolMatchFound = false;
-
         } 
         lineNumIndex++;
     }
-    outputReport = outputReport.concat( "\n\nTotal Matches Found: " + matches + "\nSearch Code was: " + search_code + "\nLetter A Value was: " + letterA + "\nTotal Words Looked At: " + ((totalWords-numberOfLines)+1) + "\nTotal Lines: " +  numberOfLines );
+    
+    outputReport = outputReport.concat( "\n\nTotal Matches Found: " + matches + "\nSearch Code was: " + search_code + "\nLetter A Value was: " + letterA + "\nTotal Words Looked At: " + totalWords + "\nTotal Lines: " +  numberOfLines );
     document.getElementById('resultReport').value = outputReport;
+
     localStorage.clear();
 
 }
 
 function do_calculation( setTextValue, theSearchCode, theLetterAValue) {
  
-    // alert("do calc call " + boolDoTwoWordPattern);
-    
-
     var letterA = theLetterAValue;;
     var search_code = theSearchCode;
     var linesOfWordsArray = setTextValue.split("\n");
@@ -199,7 +203,7 @@ function do_calculation( setTextValue, theSearchCode, theLetterAValue) {
     var totalWords = 0;
     var currentLineNum = 0;
     var matches = 0;
-    var outputReport = "";
+    let outputReport = "CALCULATION REPORT USING \"ONE WORD\" PATTERN SEARCH\n";
     var lineNumIndex = 0;
     // var theWords = '';
     var oneLineOfWords = '';
@@ -240,13 +244,14 @@ function do_calculation( setTextValue, theSearchCode, theLetterAValue) {
             if( word_total == search_code ) { // has a match been found
                 matches++;       
 
-                console.log("Match found");
-                if(matches === 1) {
-                    outputReport = "CALCULATION REPORT\n";
-                }
+                // console.log("Match found");
+
+                // if(matches === 1 && currentLineNum === 1) {
+                //     outputReport = "CALCULATION REPORT USING ONE WORD PATTERN SEARCH\n";
+                // }
                 
-                // find out if the current match word contains any non-alpha characters on its start or end
-                if( !isAlpha(oneLineOfWords[index][0]) || !isAlpha(oneLineOfWords[index][trimmedWord.length]) ) {  
+                // find out if the current match word contains any non-alpha characters on its index start or index end
+                if( !isAlpha(oneLineOfWords[index][0]) || !isAlpha(oneLineOfWords[index][trimmedWord.length-1]) ) {  
                     trimmedWord = trim_string(oneLineOfWords[index]);  // remove any filterOutCharacters
                 }
                 else {

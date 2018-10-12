@@ -71,6 +71,7 @@ p {
     color: black;
     margin-left: auto;
     margin-right: auto;
+    text-align: justify;
     width: 90%;
 }
 
