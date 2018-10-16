@@ -11,6 +11,7 @@
 </head>
 <body>
 <script>
+
 /* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
 function myFunction() {
     var x = document.getElementById("myTopnav");
@@ -51,6 +52,8 @@ function ifPossibleDoCalculation() {
         localStorage.setItem("searchCode", lookupCode);
         localStorage.setItem("letter_A_Value", letterAValue);
         localStorage.setItem("boolDoTwoWord", boolDoTwoWordCalc);
+        localStorage.setItem("calc_result_done", "no");
+
 
         window.location.href = "calc-result.html"; // load the result page
     }
@@ -61,6 +64,7 @@ function ifPossibleDoCalculation() {
 <div class="topnav" id="myTopnav">
     <a href="two-pattern.html" class="active">TWO WORD CALCULATION</a>
     <a href="index.html" >HOME</a>
+    <a href="calc-result.html" >THE REPORT</a>
     <a href="about.html" >ABOUT</a>
     <a href="help.html">HELP</a>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">

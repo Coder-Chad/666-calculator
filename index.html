@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>666 Calculator</title>
+    <title>666 Calculator Home</title>
     <meta charset='utf-8' />
     <meta name='keywords' content='666,Beast,Code,Calculator,Version 1.2.0'>
     <meta name='description' content='A simple Web App that searches and calculates uses input text looking for 666 beast code matches.'>
@@ -24,6 +24,7 @@
 </head>
 <body>
 <script>
+
 /* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
 function myFunction() {
     var x = document.getElementById("myTopnav");
@@ -33,20 +34,16 @@ function myFunction() {
         x.className = "topnav";
     }
 }     
-</script>
 
-            
-
-<script>
 function showLoader() {
     document.getElementById('loadingmsg').style.display = 'block';
     document.getElementById('loadingover').style.display = 'block';
 }
 
-var theAboutInfo = '666 Calculator Version 1.2.0\n\nLatest update: Friday October 12th 2018\n\nI will now explain how this app works.\n\nThe way it works is simple. It uses a find the "beast" formula that takes each letter of the alphabet and gives it a numeric value like this. A=6, B=12, C=18 and so on to the end of the alphabet. Using these values it looks at each word that you type or paste into the text box and adds up its value to see if it adds up to the "beast code" of 666.\n\nThe beast code of 666 comes from the Christian Bible in the book or chapter referenced as Revelation 13:18 From the King James version it reads “Here is wisdom. Let him that hath understanding count the number of the beast: for it is the number of a man; and his number is Six hundred threescore and six."\n\nSo if you do a search using the default search code value of 666 and the default letter A value of 6 you can search for the "beast code" with any text you type or paste into the text box.\n\nThe words "computer", "Kissinger", "Monsanto", "potatoes", "yuppies" and "pictures" are all examples of words that add up to the beast code of 666.\n\nNOTE: If you paste in the english language which is more than 60,000 words you will find hundreds of 666 "beast" matches for some very ordinary words.\n\nNOTE: If you select the "TWO WORD CALCULATION" menu option you can do a two word pattern searches throughout any text that you type or paste into the input text box. It will find any two words that match the search code specified. The default search code is 666 and the default value for the letter A is 6. So using the start page defaults the two words "New York" or "Recep Erdogan" or "a President" will generate a match when the search calculation is done.\n\nAuthor: Chad Vincent Estell.\n\nSend any comments or suggestions to my email below.\n\nthx3225@gmail.com\n\nThis "666 Calculator" Web application is intended for entertainment purposes only. As well I must add that I think you may find it to be quite educational as well.';
-function showAboutInfo() {
-    alert( theAboutInfo );
-}
+// var theAboutInfo = '666 Calculator Version 1.2.0\n\nLatest update: Friday October 12th 2018\n\nI will now explain how this app works.\n\nThe way it works is simple. It uses a find the "beast" formula that takes each letter of the alphabet and gives it a numeric value like this. A=6, B=12, C=18 and so on to the end of the alphabet. Using these values it looks at each word that you type or paste into the text box and adds up its value to see if it adds up to the "beast code" of 666.\n\nThe beast code of 666 comes from the Christian Bible in the book or chapter referenced as Revelation 13:18 From the King James version it reads “Here is wisdom. Let him that hath understanding count the number of the beast: for it is the number of a man; and his number is Six hundred threescore and six."\n\nSo if you do a search using the default search code value of 666 and the default letter A value of 6 you can search for the "beast code" with any text you type or paste into the text box.\n\nThe words "computer", "Kissinger", "Monsanto", "potatoes", "yuppies" and "pictures" are all examples of words that add up to the beast code of 666.\n\nNOTE: If you paste in the english language which is more than 60,000 words you will find hundreds of 666 "beast" matches for some very ordinary words.\n\nNOTE: If you select the "TWO WORD CALCULATION" menu option you can do a two word pattern searches throughout any text that you type or paste into the input text box. It will find any two words that match the search code specified. The default search code is 666 and the default value for the letter A is 6. So using the start page defaults the two words "New York" or "Recep Erdogan" or "a President" will generate a match when the search calculation is done.\n\nAuthor: Chad Vincent Estell.\n\nSend any comments or suggestions to my email below.\n\nthx3225@gmail.com\n\nThis "666 Calculator" Web application is intended for entertainment purposes only. As well I must add that I think you may find it to be quite educational as well.';
+// function showAboutInfo() {
+//     alert( theAboutInfo );
+// }
 
 function ifPossibleDoCalculation() {
     var textAreaText = document.getElementById("textArea").value;   
@@ -72,16 +69,18 @@ function ifPossibleDoCalculation() {
         localStorage.setItem("searchCode", lookupCode);
         localStorage.setItem("letter_A_Value", letterAValue);
         localStorage.setItem("boolDoTwoWord", doTwoWords);
+        localStorage.setItem("calc_result_done", "no");
         
         window.location.href = "calc-result.html"; // load the result page
     }
 }
 </script>
 
-<h1 class="index_title" onclick='showAboutInfo();'><span>666 CALCULATOR</span></h1>
+<h1><span>666 CALCULATOR</span></h1>
 <div class="topnav" id="myTopnav">
-    <a href="#home" class="active">HOME</a>
+    <a href="index.html" class="active">HOME</a>
     <a href="two-pattern.html">TWO WORD CALCULATION</a>
+    <a href="calc-result.html" >THE REPORT</a>
     <a href="about.html">ABOUT</a>
     <a href="help.html">HELP</a>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
@@ -104,10 +103,10 @@ function ifPossibleDoCalculation() {
      Comment it out when developing app and uncomment out when I am 
      about to push to github
 -->
-<br><br><a href="https://www.easycounter.com/"> 
+<!--<br><br><a href="https://www.easycounter.com/"> 
 <img src="https://www.easycounter.com/counter.php?thx3225" 
 border="0" alt="HTML Hit Counter"></a> 
-<br><a href="https://www.easycounter.com/"></a>
+<br><a href="https://www.easycounter.com/"></a>-->
 
 </div>
 </div>
