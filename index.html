@@ -64,12 +64,12 @@ function ifPossibleDoCalculation() {
             letterAValue = 6;
         }
 
-        // set the localStorage values needed for "calc-result.html"
-        localStorage.setItem("theSetText", textAreaText);
-        localStorage.setItem("searchCode", lookupCode);
-        localStorage.setItem("letter_A_Value", letterAValue);
-        localStorage.setItem("boolDoTwoWord", doTwoWords);
-        localStorage.setItem("calc_result_done", "no");
+        // set the sessionStorage values needed for "calc-result.html"
+        sessionStorage.setItem("theSetText", textAreaText);
+        sessionStorage.setItem("searchCode", lookupCode);
+        sessionStorage.setItem("letter_A_Value", letterAValue);
+        sessionStorage.setItem("boolDoTwoWord", doTwoWords);
+        sessionStorage.setItem("calc_result_done", "no");
         
         window.location.href = "calc-result.html"; // load the result page
     }

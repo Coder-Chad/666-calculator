@@ -1,19 +1,19 @@
 window.onload = function() {
-    if(localStorage.getItem("calc_result_done") == "yes") {
+    if(sessionStorage.getItem("calc_result_done") == "yes") {
         console.log("in first if");
-        document.getElementById('resultReport').value = localStorage.getItem("the_current_calc_report");
-        // localStorage.setItem("the_current_calc_report", outputReport);
+        document.getElementById('resultReport').value = sessionStorage.getItem("the_current_calc_report");
+        // sessionStorage.setItem("the_current_calc_report", outputReport);
     }
-    else if( localStorage.getItem("boolDoTwoWord") == "true" ) {
+    else if( sessionStorage.getItem("boolDoTwoWord") == "true" ) {
         console.log("in second if");
-        do_two_word_calculation( localStorage.getItem("theSetText"), localStorage.getItem("searchCode"), localStorage.getItem("letter_A_Value") );
-        localStorage.setItem("calc_result_done", "yes");
+        do_two_word_calculation( sessionStorage.getItem("theSetText"), sessionStorage.getItem("searchCode"), sessionStorage.getItem("letter_A_Value") );
+        sessionStorage.setItem("calc_result_done", "yes");
 
     }
     else {
         console.log("in third if");
-        do_calculation( localStorage.getItem("theSetText"), localStorage.getItem("searchCode"), localStorage.getItem("letter_A_Value") );
-        localStorage.setItem("calc_result_done", "yes");
+        do_calculation( sessionStorage.getItem("theSetText"), sessionStorage.getItem("searchCode"), sessionStorage.getItem("letter_A_Value") );
+        sessionStorage.setItem("calc_result_done", "yes");
     }
 };
 
@@ -187,7 +187,7 @@ function do_two_word_calculation( setTextValue, theSearchCode, theLetterAValue )
     
     outputReport = outputReport.concat( "\n\nTotal Matches Found: " + matches + "\nSearch Code was: " + search_code + "\nLetter A Value was: " + letterA + "\nTotal Words Looked At: " + totalWords + "\nTotal Lines: " +  numberOfLines );
     document.getElementById('resultReport').value = outputReport;
-    localStorage.setItem("the_current_calc_report", outputReport);
+    sessionStorage.setItem("the_current_calc_report", outputReport);
 }
 
 function do_calculation( setTextValue, theSearchCode, theLetterAValue) {
@@ -261,6 +261,6 @@ function do_calculation( setTextValue, theSearchCode, theLetterAValue) {
     }
     outputReport = outputReport.concat( "\n\nTotal Matches Found: " + matches + "\nSearch Code was: " + search_code + "\nLetter A Value was: " + letterA + "\nTotal Words Looked At: " + totalWords + "\nTotal Lines: " +  numberOfLines );    
     document.getElementById('resultReport').value = outputReport;
-    localStorage.setItem("the_current_calc_report", outputReport);
+    sessionStorage.setItem("the_current_calc_report", outputReport);
 }
 
